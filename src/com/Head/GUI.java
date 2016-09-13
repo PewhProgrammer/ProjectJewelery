@@ -13,7 +13,7 @@ public class GUI {
 
         int[] Coord = new int[4];
 
-        System.out.print("Please enter first coordinates.");
+        System.out.print("Please enter first coordinates.\n");
 
         String s = "";
 
@@ -23,7 +23,7 @@ public class GUI {
         Coord[0] = scan.nextInt();
         Coord[1] = scan.nextInt();
 
-        System.out.print("Please enter second coordinates.");
+        System.out.print("Please enter second coordinates.\n");
 
         String s2 = "";
 
