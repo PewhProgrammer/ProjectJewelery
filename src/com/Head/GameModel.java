@@ -133,7 +133,13 @@ public class GameModel {
                     oldcolor = mBoard[i][j].getKind();
                 }
             }
-
+            if (streak >= 2) {
+                for(int k=0; k <= streak; k++) {
+                    // TODO: ggf checken welche art von stein zerstört wird, ggf werden felder doppelt eingefügt
+                    explodingFields.add((mRows-1)-1-k);
+                    explodingFields.add(j);
+                }
+            }
             streak = 0;
             oldcolor = null;
         }
