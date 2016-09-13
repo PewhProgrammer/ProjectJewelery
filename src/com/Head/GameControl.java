@@ -62,12 +62,12 @@ public class GameControl extends Observable {
                 notifyUpdate(mGame);
 
                 //wait(5000);
-                movePieces();
-                notifyUpdate(mGame);
+                if(movePieces())
+                    notifyUpdate(mGame);
 
                 fillBoard();
+                notifyUpdate(mGame);
             }
-            notifyUpdate(mGame);
 
             if(availableMoves == 0) mGame.GameOver();
 
@@ -93,31 +93,37 @@ public class GameControl extends Observable {
         return false ;
     }
 
-    private void movePieces(){
+    private boolean movePieces(){
 
         int nullCounter = 0;
+        boolean moved = false;
 
         for(int j = 0; j < mGame.getColumns(); j++) {
-            for (int i= mGame.getRows(); i >= 0; i--) {
+            for (int i= mGame.getRows()-1; i >= 0; i--) {
                 if(mGame.getBoard()[i][j] == null) {
                     nullCounter++;
                 }
                 else if (nullCounter != 0) {
 
-                    for(int k = i+nullCounter; k > nullCounter; k--) {
+                    for(int k = i+nullCounter; k > nullCounter -1; k--) {
                         mGame.getBoard()[k][j] = mGame.getBoard()[k - nullCounter][j];
+                        moved = true;
                     }
 
-                    for(int k = nullCounter; k>= 0; k--) {
+                    for(int k = nullCounter -1; k>= 0; k--) {
                         mGame.getBoard()[k][j] = null;
+                        moved = true;
                     }
 
                     nullCounter = 0;
+
                 }
             }
 
             nullCounter = 0;
         }
+
+        return moved;
     }
 
     private void fillBoard(){

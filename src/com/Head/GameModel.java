@@ -49,9 +49,10 @@ public class GameModel {
                 int offset = 0 ;
                 if(mBoard[i][j] == null)
                     offset = constant ;
-                else
-                    offset = constant - mBoard[i][j].getKind().toString().length() ;
-                builder.append(mBoard[i][j]);
+                else {
+                    offset = constant - mBoard[i][j].getKind().toString().length();
+                    builder.append(mBoard[i][j]);
+                }
                 for(int append = 0  ; append < offset ; append++){
                     builder.append(" ");
                 }
