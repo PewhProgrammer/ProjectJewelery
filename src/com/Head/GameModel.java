@@ -17,6 +17,9 @@ public class GameModel {
     private final Random mRand ;
     private Piece[][] mBoard;
     private int mRows , mColumns ;
+    private boolean mGameOver = false;
+
+    private int mPoints = 0;
 
     public GameModel(int seed,int rows, int columns){
         mRows = rows ;
@@ -30,8 +33,38 @@ public class GameModel {
         mBoard[i][j] = p ;
     }
 
+    public void GameOver(){
+        mGameOver = true ;
+    }
 
-    /**********************  GETTERS *************************/
+    @Override
+    public String toString(){
+
+        StringBuilder builder = new StringBuilder() ;
+
+
+        for (int i = 0 ; i < mRows ; i++){
+            for(int j = 0 ; j < mColumns; j++){
+                builder.append(mBoard[i][j]).append(" | ");
+            }
+            builder.append("\n");
+        }
+
+        return builder.toString();
+    }
+
+
+    /**********************  SETTERS  *************************/
+
+    public void incPoints(int i){
+        this.mPoints += i ;
+    }
+
+    /**********************  GETTERS  *************************/
+
+    public int getPoints(){return mPoints;}
+
+    public boolean getGameOver(){return mGameOver;}
 
     public Random getRandomizer(){
         return this.mRand;
@@ -50,21 +83,6 @@ public class GameModel {
         return mColumns;
     }
 
-    @Override
-    public String toString(){
-
-        StringBuilder builder = new StringBuilder() ;
-
-
-        for (int i = 0 ; i < mRows ; i++){
-            for(int j = 0 ; j < mColumns; j++){
-                builder.append(mBoard[i][j]).append(" | ");
-            }
-            builder.append("\n");
-        }
-
-        return builder.toString();
-    }
 
     public List<Integer> checkForExplosion() {
 

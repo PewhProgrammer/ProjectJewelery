@@ -1,11 +1,15 @@
 package com.Head;
 
+import com.Pieces.Piece;
+import com.Utility.IObserver;
+
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
  * Created by Lea on 13.09.2016.
  */
-public class GUI {
+public class GUI implements IObserver{
 
     private Scanner Input = new Scanner(System.in);
 
@@ -34,11 +38,11 @@ public class GUI {
         Coord[3] = scan2.nextInt();
 
         return Coord;
-
-
     }
 
 
-
-
+    @Override
+    public void update(GameModel model) {
+        System.out.print(model.toString());
+    }
 }
