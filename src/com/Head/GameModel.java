@@ -28,7 +28,6 @@ public class GameModel {
     }
 
 
-
     /**********************  GETTERS *************************/
 
     public Random getRandomizer(){

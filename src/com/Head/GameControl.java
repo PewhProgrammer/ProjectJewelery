@@ -28,5 +28,7 @@ public class GameControl {
         Log.setLevel(Log.Level.INFO);
         Log.info("\n"+mGame.toString());
 
+
+
     }
 }
