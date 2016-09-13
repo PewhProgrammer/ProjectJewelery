@@ -1,9 +1,12 @@
 package com.Head;
 
+import com.Pieces.Kind;
 import com.Pieces.Piece;
 import com.Pieces.PieceFactory;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -61,6 +64,57 @@ public class GameModel {
         }
 
         return builder.toString();
+    }
+
+    public List<Integer> checkForExplosion() {
+
+        List<Integer> explodingFields = new ArrayList<>();
+        int streak = 0;
+        Kind oldcolor = null;
+
+        for(int i=0; i<mRows; i++) {
+            for (int j=0; j<mColumns; j++) {
+                if (mBoard[i][j].getKind() == oldcolor) streak++;
+
+                else {
+                    if (streak >= 2) {
+                        for(int k=0; k <= streak; k++) {
+                           // TODO: ggf checken welche art von stein zerstört wird
+                            explodingFields.add(i);
+                            explodingFields.add(j-1-k);
+                        }
+                    }
+                    streak = 0;
+                    oldcolor = mBoard[i][j].getKind();
+                }
+            }
+
+            streak = 0;
+            oldcolor = null;
+        }
+
+        for(int j=0; j<mColumns; j++) {
+            for (int i=0; i<mRows; i++) {
+                if (mBoard[i][j].getKind() == oldcolor) streak++;
+
+                else {
+                    if (streak >= 2) {
+                        for(int k=0; k <= streak; k++) {
+                            // TODO: ggf checken welche art von stein zerstört wird, ggf werden felder doppelt eingefügt
+                            explodingFields.add(i-1-k);
+                            explodingFields.add(j);
+                        }
+                    }
+                    streak = 0;
+                    oldcolor = mBoard[i][j].getKind();
+                }
+            }
+
+            streak = 0;
+            oldcolor = null;
+        }
+
+        return explodingFields;
     }
 
 }

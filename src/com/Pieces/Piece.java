@@ -18,4 +18,12 @@ public class Piece {
         return mKind.toString();
     }
 
+    public Kind getKind() {
+        return this.mKind;
+    }
+
+    public Power getmPower() {
+        return this.mPower;
+    }
+
 }
