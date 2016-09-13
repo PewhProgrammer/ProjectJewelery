@@ -24,10 +24,13 @@ public class Main {
         GameModel game = new GameModel(seed,4,4);
         GameControl ctrl = new GameControl(game);
         GUI gui = new GUI();
+
+        Log.setLevel(Log.Level.INFO);
         try {
             ctrl.startGame();
         }catch(Exception e){
-            Log.debug("What happened ? " + e.toString());
+            Log.debug("What happened ? ");
+            e.printStackTrace();
         }
 
     }

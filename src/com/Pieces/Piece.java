@@ -15,6 +15,14 @@ public class Piece {
 
     @Override
     public String toString(){
+        switch (mKind){
+            case RED: return (char)27 + "[31m"+mKind.toString() + (char)27 + "[0m";
+            case BLUE: return (char)27 + "[34m"+mKind.toString() + (char)27 + "[0m";
+            case YELLOW: return (char)27 + "[33m"+mKind.toString() + (char)27 + "[0m";
+            case GREEN: return (char)27 + "[32m"+mKind.toString() + (char)27 + "[0m";
+            case BLACK: return (char)27 + "[37m"+mKind.toString() + (char)27 + "[0m";
+            default: break;
+        }
         return mKind.toString();
     }
 

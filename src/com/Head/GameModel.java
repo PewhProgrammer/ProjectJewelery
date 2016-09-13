@@ -42,15 +42,26 @@ public class GameModel {
 
         StringBuilder builder = new StringBuilder() ;
 
+        final int constant = 10 ;
 
         for (int i = 0 ; i < mRows ; i++){
             for(int j = 0 ; j < mColumns; j++){
-                builder.append(mBoard[i][j]).append(" | ");
+                int offset = 0 ;
+                if(mBoard[i][j] == null)
+                    offset = constant ;
+                else
+                    offset = constant - mBoard[i][j].getKind().toString().length() ;
+                builder.append(mBoard[i][j]);
+                for(int append = 0  ; append < offset ; append++){
+                    builder.append(" ");
+                }
+
+                builder.append("| ");
             }
             builder.append("\n");
         }
 
-        return builder.toString();
+        return builder.append("\n").toString();
     }
 
 

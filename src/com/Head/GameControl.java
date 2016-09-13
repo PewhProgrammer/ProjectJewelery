@@ -29,15 +29,26 @@ public class GameControl extends Observable {
         GUI gui = new GUI();
         attach(gui);
 
+        notifyUpdate(mGame);
+
         int availableMoves = 100 ;
 
         while(!mGame.getGameOver()){
 
             int[] input = gui.userInput() ;
 
-            if(!checkCoordinates(input)) {
-                Log.info("Please enter new coordinates biatch!");
-                continue;
+            Piece[][] board = mGame.getBoard();
+
+            Piece help = board[input[0]][input[1]];
+            board[input[0]][input[1]] = board[input[2]][input[3]] ;
+            board[input[2]][input[3]] = help ;
+
+            if(!checkCoordinates(input) || mGame.checkForExplosion().size() == 0) {
+                    Log.info("Please enter new coordinates biatch!");
+                    //reswap
+                    board[input[2]][input[3]] = board[input[0]][input[1]];
+                    board[input[0]][input[1]] = help;
+                    continue;
             }
 
             availableMoves-- ;
@@ -50,12 +61,13 @@ public class GameControl extends Observable {
                 executeExplosion(explodingFields);
                 notifyUpdate(mGame);
 
-                wait(5000);
+                //wait(5000);
                 movePieces();
+                notifyUpdate(mGame);
 
                 fillBoard();
-                notifyUpdate(mGame);
             }
+            notifyUpdate(mGame);
 
             if(availableMoves == 0) mGame.GameOver();
 
@@ -112,7 +124,20 @@ public class GameControl extends Observable {
 
         //TODO fill the Board in given Direction(?)
 
+        Piece[][] board = mGame.getBoard();
+        boolean break_flag = true ;
 
+        for(int i = 0 ; i < mGame.getRows() ; i++){
+            for(int j = 0 ; j < mGame.getColumns() ; j++){
+
+                if(board[i][j] == null) {
+                    board[i][j] = PieceFactory.createRandomPiece() ;
+                    break_flag = false;
+                }
+            }
+            if(break_flag) return ;
+            break_flag = true ;
+        }
 
     }
 
