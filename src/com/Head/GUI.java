@@ -2,6 +2,7 @@ package com.Head;
 
 import com.Pieces.Piece;
 import com.Utility.IObserver;
+import com.Utility.Log;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class GUI implements IObserver{
 
         int[] Coord = new int[4];
 
-        System.out.print("Please enter first coordinates.\n");
+        Log.info("Please enter first coordinates.\n");
 
         String s = "";
 
@@ -27,7 +28,7 @@ public class GUI implements IObserver{
         Coord[0] = scan.nextInt();
         Coord[1] = scan.nextInt();
 
-        System.out.print("Please enter second coordinates.\n");
+        Log.info("Please enter second coordinates.\n");
 
         String s2 = "";
 

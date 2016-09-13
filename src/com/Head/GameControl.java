@@ -8,6 +8,8 @@ import com.Utility.Observable;
 import java.util.Iterator;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by Thinh-Laptop on 13.09.2016.
  *
@@ -32,12 +34,14 @@ public class GameControl extends Observable {
         while(!mGame.getGameOver()){
 
             int[] input = gui.userInput() ;
-            availableMoves-- ;
 
-            if(!checkMove()) {
+            if(!checkCoordinates(input)) {
                 Log.info("Please enter new coordinates biatch!");
                 continue;
             }
+
+            availableMoves-- ;
+
             while(true){
 
                 List<Integer> explodingFields = mGame.checkForExplosion();
@@ -47,7 +51,7 @@ public class GameControl extends Observable {
                 notifyUpdate(mGame);
 
                 wait(5000);
-                movePieces(explodingFields);
+                movePieces();
 
                 fillBoard();
                 notifyUpdate(mGame);
@@ -61,12 +65,47 @@ public class GameControl extends Observable {
 
     /**************************************  PRIVATE  **************************************/
 
-    private boolean checkMove(){
+    private boolean checkCoordinates(int[] input){
+
+        if (input[0] >= mGame.getRows() || input[2] >= mGame.getRows()) return false;
+        if (input[1] >= mGame.getColumns() || input[3] >= mGame.getColumns()) return false;
+
+        if(input[0] == input[2]) {
+            if(abs(input[1] - input[3])== 1) return true;
+        }
+
+        if(input[1] == input[3]) {
+            if(abs(input[0] - input[2])== 1) return true;
+        }
 
         return false ;
     }
-    private void movePieces(List<Integer> explodingFields){
 
+    private void movePieces(){
+
+        int nullCounter = 0;
+
+        for(int j = 0; j < mGame.getColumns(); j++) {
+            for (int i= mGame.getRows(); i >= 0; i--) {
+                if(mGame.getBoard()[i][j] == null) {
+                    nullCounter++;
+                }
+                else if (nullCounter != 0) {
+
+                    for(int k = i+nullCounter; k > nullCounter; k--) {
+                        mGame.getBoard()[k][j] = mGame.getBoard()[k - nullCounter][j];
+                    }
+
+                    for(int k = nullCounter; k>= 0; k--) {
+                        mGame.getBoard()[k][j] = null;
+                    }
+
+                    nullCounter = 0;
+                }
+            }
+
+            nullCounter = 0;
+        }
     }
 
     private void fillBoard(){
