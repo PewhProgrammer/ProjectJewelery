@@ -4,7 +4,6 @@ import com.Pieces.Kind;
 import com.Pieces.Piece;
 import com.Pieces.PieceFactory;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

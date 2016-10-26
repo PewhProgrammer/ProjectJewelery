@@ -5,6 +5,7 @@ package com.Pieces;
  */
 public enum Kind {
 
+    NON,
     BLUE,
     RED,
     YELLOW,

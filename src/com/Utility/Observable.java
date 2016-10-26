@@ -1,7 +1,6 @@
 package com.Utility;
 
 import com.Head.GameModel;
-import com.Pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;

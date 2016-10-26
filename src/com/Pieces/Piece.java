@@ -26,11 +26,16 @@ public class Piece {
         return mKind.toString();
     }
 
+    public boolean isKind(Kind k){
+        return k == mKind ;
+    }
+
     public Kind getKind() {
         return this.mKind;
     }
 
-    public Power getmPower() {
+
+    public Power getPower() {
         return this.mPower;
     }
 

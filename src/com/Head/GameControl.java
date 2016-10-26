@@ -1,9 +1,16 @@
 package com.Head;
 
+import com.Gui.ConsoleGUI;
+import com.Gui.Controller;
+import com.Gui.GraphicalGUI;
+import com.Pieces.Kind;
 import com.Pieces.Piece;
 import com.Pieces.PieceFactory;
+import com.Utility.IObserver;
 import com.Utility.Log;
 import com.Utility.Observable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +33,10 @@ public class GameControl extends Observable {
     public void startGame() throws InterruptedException{
 
         initGame();
-        GUI gui = new GUI();
+
+        IObserver gui = null;
+        while(gui == null)
+            gui = GraphicalGUI.getController();
         attach(gui);
 
         notifyUpdate(mGame);
@@ -44,7 +54,7 @@ public class GameControl extends Observable {
             board[input[2]][input[3]] = help ;
 
             if(!checkCoordinates(input) || mGame.checkForExplosion().size() == 0) {
-                    Log.info("Please enter new coordinates biatch!");
+                    Log.info("Please re-enter new coordinates !");
                     //reswap
                     board[input[2]][input[3]] = board[input[0]][input[1]];
                     board[input[0]][input[1]] = help;
@@ -52,6 +62,7 @@ public class GameControl extends Observable {
             }
 
             availableMoves-- ;
+            Log.info("Move successful. You can enter new coordinates !");
 
             while(true){
 
@@ -61,7 +72,6 @@ public class GameControl extends Observable {
                 executeExplosion(explodingFields);
                 notifyUpdate(mGame);
 
-                //wait(5000);
                 if(movePieces())
                     notifyUpdate(mGame);
 
@@ -100,7 +110,7 @@ public class GameControl extends Observable {
 
         for(int j = 0; j < mGame.getColumns(); j++) {
             for (int i= mGame.getRows()-1; i >= 0; i--) {
-                if(mGame.getBoard()[i][j] == null) {
+                if(mGame.getBoard()[i][j].isKind(Kind.NON)) {
                     nullCounter++;
                 }
                 else if (nullCounter != 0) {
@@ -111,7 +121,7 @@ public class GameControl extends Observable {
                     }
 
                     for(int k = nullCounter -1; k>= 0; k--) {
-                        mGame.getBoard()[k][j] = null;
+                        mGame.getBoard()[k][j] = PieceFactory.createPiece(Kind.NON);
                         moved = true;
                     }
 
@@ -136,7 +146,7 @@ public class GameControl extends Observable {
         for(int i = 0 ; i < mGame.getRows() ; i++){
             for(int j = 0 ; j < mGame.getColumns() ; j++){
 
-                if(board[i][j] == null) {
+                if(board[i][j].isKind(Kind.NON)) {
                     board[i][j] = PieceFactory.createRandomPiece() ;
                     break_flag = false;
                 }
@@ -158,7 +168,8 @@ public class GameControl extends Observable {
         Iterator<Integer> it = explodingFields.iterator();
 
         while(it.hasNext()){
-            board[it.next()][it.next()] = null ;
+            board[it.next()][it.next()] = PieceFactory.createPiece(Kind.NON) ;
+            mGame.incPoints(1);
         }
 
     }

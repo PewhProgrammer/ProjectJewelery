@@ -1,16 +1,15 @@
-package com.Head;
+package com.Gui;
 
-import com.Pieces.Piece;
+import com.Head.GameModel;
 import com.Utility.IObserver;
 import com.Utility.Log;
 
-import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
  * Created by Lea on 13.09.2016.
  */
-public class GUI implements IObserver{
+public class ConsoleGUI implements IObserver {
 
     private Scanner Input = new Scanner(System.in);
 
